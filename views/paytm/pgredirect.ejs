@@ -3,9 +3,11 @@
 <title>Merchant Check Out Page</title>
 </head>
 <body>
-	<center><h1>Please do not refresh this page...</h1></center>
+	<center><h1>Please do not refresh this page... f<%= JSON.stringify(restdata) %></h1></center>
 
-		<form method="post" action="https://pguat.paytm.com/oltp-web/processTransaction" name="f1"> 
+		<form method="post" action="https://pguat.paytm.com/oltp-web/processTransaction" id="f1"> 
+		<!-- <form method="post" action="" id="f1">  -->
+			
 		<table border="1">
 			<tbody>
 			<% for (name in restdata) { 
@@ -18,8 +20,10 @@
 			</tbody>
 		</table>
 		<script type="text/javascript">
-			document.f1.submit();
+			// document.getElementById('f1').submit();
 		</script>
 	</form>
 </body>
 </html>
+
+

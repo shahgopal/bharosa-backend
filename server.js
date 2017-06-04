@@ -4,12 +4,24 @@
 // const app = express();
 
 
+// require('dotenv').config();
 
 
 
 
-
-
+const express    = require('express'),
+  app            = express(),
+  port           = process.env.PORT || 8000,
+  expressLayouts = require('express-ejs-layouts'),
+  mongoose       = require('mongoose'),
+  passport 		 = require('passport'),
+  bodyParser     = require('body-parser'),
+  session        = require('express-session'),
+  cookieParser   = require('cookie-parser'),
+  flash          = require('connect-flash'),
+  expressValidator = require('express-validator'),
+  morgan       	 = require('morgan'),
+  configDB = require('./config/database.js');
 
 
 
@@ -19,24 +31,26 @@
 
 // set up ======================================================================
 // get all the tools we need
-var express  = require('express');
-var app      = express();
-var port     = process.env.PORT || 8080;
-var mongoose = require('mongoose');
-var passport = require('passport');
-var flash    = require('connect-flash');
+// var express  = require('express');
+// var app      = express();
+// var port     = process.env.PORT || 8080;
+// var mongoose = require('mongoose');
+// var passport = require('passport');
+// var flash    = require('connect-flash');
 
-var morgan       = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
+// var morgan       = require('morgan');
+// var cookieParser = require('cookie-parser');
+// var bodyParser   = require('body-parser');
+// var session      = require('express-session');
 
-var configDB = require('./config/database.js');
+// var configDB = require('./config/database.js');
 
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
+
+
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -50,23 +64,27 @@ app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secre
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
-
+app.use(expressLayouts);
+app.use(expressValidator());
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
-
 // launch ======================================================================
 app.listen(port);
 console.log('The magic happens on port ' + port);
 
-
+// require('./app/routes')(app)
 require('./app/paytm_routes/testtxn')(app)
 require('./app/paytm_routes/pgredirect')(app);
 require('./app/paytm_routes/response')(app);
 app.use(express.static(__dirname + '/public'));
-app.set('views', __dirname + '/views/paytm');
-app.set('view engine', 'ejs');
-
+// app.set('views', __dirname + '/views/paytm');
+app.set('views', [__dirname + '/views', __dirname + '/views/paytm']);
 // app.use(bodyParser.urlencoded({extended: true}))
+
+// require('./app/campaign_routes/campaignroutes')(app);
+
+
+
 
 // MongoClient.connect('mongodb://localhost/bharosa-backend', function(err, database) {
 //   if(err) {

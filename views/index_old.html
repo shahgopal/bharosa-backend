@@ -1,0 +1,25 @@
+<-- index.html -->
+<h2>Campaigns Listing</h2>
+ 
+<table class="table" ng-if="campaigns.length>0">
+ <tr>
+ <th>SNo.</th>
+ <th>Name</th>
+ <th>Address</th>
+ <th>Contact No.</th>
+ <th>Actions</th>
+ </tr>
+ <tr ng-repeat="campaign in campaigns">
+ <td>1</td>
+ <td></td>
+ <td></td>
+ <td></td>
+ <td>
+ <a ui-sref="edit({id:campaign._id})">Edit</a> |
+ <a href="#" ng-click="deleteCampaign(campaign._id)">Delete</a>
+ </td>
+ </tr>
+</table>
+<div ng-if="campaigns.length==0">
+ No record found !!
+</div>

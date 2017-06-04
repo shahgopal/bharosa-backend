@@ -1,0 +1,33 @@
+<h2 ng-show="campaign._id!=null">Edit</h2>
+<h2 ng-hide="campaign._id!=null">Create</h2>
+<hr>
+<form name="campaignForm" ng-submit="saveData(campaign)" novalidate class="form-horizontal">
+ <div class="form-group">
+ <label class="col-md-2">Name</label>
+ <div class="col-md-10">
+ <input type="text" ng-model="campaign.name" name="name" ng-required="true" class="form-control"/>
+ <p ng-show="campaignForm.name.$error.required && (campaignForm.$submitted || campaignForm.name.$dirty)" class="text-danger">Please Enter Name</p>
+ </div>
+ </div>
+ <div class="form-group">
+ <label class="col-md-2">Address</label>
+ <div class="col-md-10">
+ <textarea name="address" ng-model="campaign.address" ng-required="true" class="form-control"></textarea>
+ <p ng-show="campaignForm.address.$error.required && (campaignForm.$submitted || campaignForm.address.$dirty)" class="text-danger">Please Enter Address</p>
+ </div>
+ </div>
+ <div class="form-group">
+ <label class="col-md-2">Contact No.</label>
+ <div class="col-md-10">
+ <input type="text" ng-model="campaign.contactNo" name="contactNo" ng-required="true" class="form-control"/>
+ <p ng-show="campaignForm.contactNo.$error.required && (campaignForm.$submitted || campaignForm.contactNo.$dirty)" class="text-danger">Please Enter Contact No.</p>
+ </div>
+ </div>
+ <div class="form-group">
+ <div class="col-md-offset-2 col-md-10">
+ <input type="submit" value="Update" class="btn btn-primary" ng-show="campaign._id!=null"/>
+ <input type="submit" value="Save" class="btn btn-primary" ng-hide="campaign._id!=null"/>
+ <a ui-sref="campaigns" class="btn btn-warning">Cancel</a>
+ </div>
+ </div>
+</form>

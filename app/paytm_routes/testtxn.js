@@ -14,7 +14,7 @@ res.render('testtxn.ejs',{'config' : config});
         console.log("POST Order start");
         var paramlist = req.body;
         var paramarray = new Array();
-        console.log(paramlist);
+        //console.log(paramlist);
         for (name in paramlist)
         {
           if (name == 'PAYTM_MERCHANT_KEY') {
@@ -24,11 +24,18 @@ res.render('testtxn.ejs',{'config' : config});
             paramarray[name] = paramlist[name] ;
             }
         }
-        console.log(paramarray);
+        
         paramarray['CALLBACK_URL'] = 'http://localhost:8080/response';  // in case if you want to send callback
+        
         console.log(PAYTM_MERCHANT_KEY);
+
+        console.log("paramarrayis:");
+        console.log(paramarray);
+        console.log("paramlist:");
+        console.log(paramlist);
         checksum.genchecksum(paramarray, PAYTM_MERCHANT_KEY, function (err, result) 
         {
+              console.log("result");
               console.log(result);
            res.render('pgredirect.ejs',{ 'restdata' : result });
         });
